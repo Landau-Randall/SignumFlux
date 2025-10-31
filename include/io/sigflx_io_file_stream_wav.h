@@ -3,6 +3,7 @@
 #include "io/sigflx_io_file_stream_template.h"
 #include "sigflx_lib/sigflx_allocators_aligned.h"
 #include "sigflx_lib/sigflx_platform_file.h"
+#include "sigflx_io_byte.h"
 
 namespace SignumFlux
 {
@@ -32,6 +33,7 @@ public:
     using DataType = std::uint8_t;
     using SizeType = std::size_t;
     using AllocatorType = Allocator;
+    enum class Mode {Read,Write,ReadWrite};
 private:
     WAVHeader header_{};
     DataType * buffer_ = nullptr;
@@ -39,10 +41,14 @@ private:
     SizeType bufferDataSize_ = 0;
     SizeType bufferOffset_ = 0;
     bool isOpen_ = false;
+    bool isHeaderWritten_ = false;
     int fileDescriptor_ = -1;
+    Mode mode_ = Mode::Read;
     AllocatorType allocator_;
 
     void headerAnalyze();
+    void headerWrite();
+    void initialHeader();
     void createFile(const char * path);
 public:
     FileStream();
@@ -60,10 +66,11 @@ public:
     FileStream & operator=(FileStream && object);
 
     void open(const char * path) override;
+    void open(const char * path,Mode mode);
     void close() override;
     SizeType read(std::uint8_t * buffer,SizeType size) override;
     SizeType write(const std::uint8_t * buffer,SizeType size) override;
-    bool isOpen() const;
+    bool isOpen() const noexcept { return isOpen_; };
 };
 
 template<typename Allocator>
