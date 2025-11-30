@@ -1,5 +1,6 @@
 #pragma once
 #include <cstddef>
+#include "sigflx_lib/sigflx_allocators_fixed_pool.h"
 
 
 namespace SignumFlux
@@ -28,10 +29,19 @@ template<typename CharType>
 void stringFill(CharType* dest, CharType value, std::size_t n);
 
 template<typename CharType>
+std::size_t stringSignCount(const CharType * str,CharType sign);
+
+template<typename CharType>
+std::size_t stringSignCount(const CharType * str,std::size_t len,CharType sign);
+
+template<typename CharType>
 const CharType ** stringSplit(const CharType * str,CharType splitSign);
 
 template<typename CharType>
-CharType ** stringSplit(CharType * str,CharType splitSign,bool canCopy);
+const CharType ** stringSplit(const CharType * str, std::size_t len, CharType splitSign);
+
+template<typename CharType>
+void stringsRelease(const CharType ** strings);
 
 template<typename CharType>
 void stringConcatenate(CharType * dest,const CharType * src);

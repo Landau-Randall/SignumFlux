@@ -168,22 +168,42 @@ void stringFill(CharType* dest, CharType value, std::size_t n)
 }
 
 template<typename CharType>
+std::size_t stringSignCount(const CharType * str,CharType sign)
+{
+    std::size_t count = 0;
+    const CharType * counter = str;
+    while (*counter != static_cast<CharType>('\0'))
+    {
+        if (*counter == sign)
+            ++count;
+        ++counter;
+    }
+    return count;
+}
+
+template<typename CharType>
+std::size_t stringSignCount(const CharType * str,std::size_t len,CharType sign)
+{
+    std::size_t count = 0;
+    for (std::size_t i = 0;i < len;++i)
+    {
+        if (str[i] == sign)
+            ++count; 
+    }
+    return count;
+}
+
+template<typename CharType>
 const CharType ** stringSplit(const CharType * str,CharType splitSign)
 {
     if (str != nullptr && splitSign != static_cast<CharType>('\0'))
     {
         std::size_t count = 1;
-        const CharType * counter = str;
-        while(*counter != static_cast<CharType>('\0'))
-        {
-            if (*counter == splitSign)
-                ++count;
-            ++counter;
-        }
+        count += stringSignCount(str,splitSign);
         
         const CharType ** result = new const CharType*[count + 1];
         const CharType * start = str;
-        counter = str;
+        const CharType * counter = str;
         std::size_t index = 0;
         while (*counter != static_cast<CharType>('\0'))
         {
@@ -205,64 +225,42 @@ const CharType ** stringSplit(const CharType * str,CharType splitSign)
 }
 
 template<typename CharType>
-CharType ** stringSplit(CharType * str,CharType splitSign,bool canCopy)
+const CharType ** stringSplit(const CharType * str, std::size_t len, CharType splitSign)
 {
-    if (str != nullptr && splitSign != static_cast<CharType>('\0'))
+    if (str != nullptr && len = 0 && splitSign != static_cast<CharType>('\0'))
     {
         std::size_t count = 1;
-        CharType * counter = str;
-        while(*counter != static_cast<CharType>('\0'))
-        {
-            if (*counter == splitSign)
-                ++count;
-            ++counter;
-        }
-        
-
-        CharType ** result = new CharType*[count + 1];
-        CharType * start = str;
-        counter = str;
+        count += stringSignCount(str,len,splitSign);
+        const CharType ** result = new const CharType*[count + 1];
         std::size_t index = 0;
-        while (*counter != static_cast<CharType>('\0'))
+        result[index++] = str;
+
+        for (std::size_t i = 0;i < len;++i)
         {
-            if (*counter == splitSign)
-            {
-                if (!canCopy)
-                {
-                    result[index++] = start;
-                    start = counter + 1;
-                }
-                else   
-                {
-                    std::ptrdiff_t size = counter - start;
-                    CharType * buffer = new CharType[size + 1];
-                    stringCopy(buffer,start,size + 1);
-                    result[index++] = buffer;
-                    start = counter + 1;
-                }
-            }
-            ++counter;
+            if (str[i] == splitSign)
+                result[index++] = (str + i + 1);
         }
-        if (!canCopy)
-        {
-            result[index++] = start;
-        }
-        else
-        {
-            std::ptrdiff_t size = counter - start;
-            CharType * buffer = new CharType[size + 1];
-            stringCopy(buffer,start,size + 1);
-            result[index++] = buffer;
-        }
+
         result[index] = nullptr;
+        
         return result;
     }
     else
     {
         return nullptr;
     }
+
+
 }
 
+template<typename CharType>
+void stringsRelease(const CharType ** strings)
+{
+    if (strings != nullptr)
+    {
+        delete [] strings;
+    }
+}
 
 template<typename CharType>
 void stringConcatenate(CharType * dest,const CharType * src)
