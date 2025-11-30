@@ -82,24 +82,20 @@ TEST(CStringMethods,StringSplit)
 {
     using namespace SignumFlux::Strings;
     const char * test1 = "you,finally awake";
-    char test2[] = "hey,you,finally awake";
+    const char test2[] = "hey,you,finally awake";
     const char* test3 = nullptr;
     const char ** split1 = stringSplit(test1,',');
     const char ** split2 = stringSplit(test3,',');
-    char ** split3 = stringSplit(test2,',',true);
-    char ** split4 = stringSplit(test2,',',false);
+    const char ** split3 = stringSplit(test2,',');
+    const char ** split4 = stringSplit(test2,',');
     EXPECT_EQ(split1[1][1],'i');
     EXPECT_EQ(split2,nullptr);
     EXPECT_STREQ(split3[2],test2 + 8);
     EXPECT_EQ(split4[0],test2);
-    char ** cop  = split3;
-    while (*cop != nullptr)
-    {
-        delete [] *cop;
-        ++cop;
-    }
-    delete [] split3;
-
+    stringsRelease(split1);
+    stringsRelease(split2);
+    stringsRelease(split3);
+    stringsRelease(split4);
 }
 
 TEST(CStringMethods,StringConcatenate)
