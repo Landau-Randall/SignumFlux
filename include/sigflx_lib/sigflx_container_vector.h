@@ -36,6 +36,8 @@ public:
     Vector(Vector && object) noexcept;
     Vector(std::initializer_list<ValueType> list);
     Vector(std::initializer_list<ValueType> list,const AllocatorType & allocator);
+    Vector(SizeType size);
+    Vector(SizeType size, const Allocator & allocator);
     Vector(SizeType size,ValueType value = ValueType(0));
     Vector(SizeType size,ValueType value,const AllocatorType & allocator);
 

@@ -82,6 +82,24 @@ allocator_(allocator)
 }
 
 template<typename T,typename Allocator>
+Vector<T,Allocator>::Vector(SizeType size):
+size_(size),
+capacity_(size * 2),
+allocator_()
+{
+    data_ = allocator_.allocate(capacity_);
+}
+
+template<typename T,typename Allocator>
+Vector<T,Allocator>::Vector(SizeType size,const AllocatorType & allocator):
+size_(size),
+capacity_(size * 2),
+allocator_(allocator)
+{
+    data_ = allocator_.allocate(capacity_);
+}
+
+template<typename T,typename Allocator>
 Vector<T,Allocator>::Vector(SizeType size,ValueType value):
 size_(size),
 capacity_(size * 2),
