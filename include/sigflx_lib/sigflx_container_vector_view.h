@@ -36,6 +36,8 @@ public:
     Reference operator[](SizeType index);
     Reference at(SizeType index);
 
+    VectorView subView(std::size_t start,std::size_t size) const;
+
     Iterator begin();
     Iterator end();
 
