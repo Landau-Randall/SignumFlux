@@ -42,6 +42,8 @@ public:
     Reference at(SizeType index);
     ConstReference at(SizeType index) const;
 
+    VectorView subView(std::size_t start,std::size_t size) const;
+
     Iterator begin();
     Iterator end();
     ConstIterator cbegin() const;

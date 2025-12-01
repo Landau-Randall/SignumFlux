@@ -51,6 +51,19 @@ typename VectorView<T>::ConstReference VectorView<T>::at(SizeType index) const
 }
 
 template<typename T>
+VectorView<T> VectorView<T>::subView(std::size_t start,std::size_t size) const
+{
+    if (start <= size_ && size <= size_ - start)
+    {
+        return VectorView(data_ + start,size);
+    }
+    else
+    {
+        return VectorView();
+    }
+}
+
+template<typename T>
 typename VectorView<T>::Iterator VectorView<T>::begin()
 {
     return data_;
