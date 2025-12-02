@@ -4,8 +4,8 @@ namespace SignumFlux
 {
 namespace Math
 {
-template<typename InputType,typename IntegerType>
-IntegerType pointerHash(const InputType * input)
+template<typename PointerType,typename IntegerType>
+IntegerType pointerHash(PointerType input)
 {
     static_assert(std::is_integral<IntegerType>::value,"IntegerType must be the intefer!\n");
 
