@@ -13,6 +13,24 @@ size_(size)
 }
 
 template<typename T>
+bool VectorView<T>::operator==(const VectorView & object) const
+{
+    if (size_ != object.size_)
+    {
+        return false;
+    }
+    else
+    {
+        for (SizeType i = 0;i < size_;++i)
+        {
+            if (data_[i] != object.data_[i])
+                return false;
+        }
+        return true;
+    }
+}   
+
+template<typename T>
 typename VectorView<T>::Reference VectorView<T>::operator[](SizeType index)
 {
     return data_[index];

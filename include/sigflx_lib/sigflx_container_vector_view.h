@@ -27,6 +27,9 @@ public:
 
     ~VectorView() = default;
 
+    bool operator==(const VectorView & object) const;
+    bool operator!=(const VectorView & object) const;
+
     VectorView & operator=(const VectorView & object) = default;
     VectorView & operator=(VectorView && object) = default;
 
