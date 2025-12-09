@@ -8,7 +8,10 @@ namespace SignumFlux
 namespace Math
 {
 template<typename PointerType,typename IntegerType>
-IntegerType pointerHash(PointerType * input);
+IntegerType pointerHash(PointerType input);
+
+template<typename ViewType,typename IntegerType>
+IntegerType viewHash(ViewType input);
 
 }
 }

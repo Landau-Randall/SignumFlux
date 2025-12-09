@@ -18,5 +18,18 @@ IntegerType pointerHash(PointerType input)
 
     return static_cast<IntegerType>(firstValue);
 }
+
+template<typename ViewType,typename IntegerType>
+IntegerType viewHash(ViewType input)
+{
+    static_assert(std::is_integral<IntegerType>::value,"IntegerType must be the intefer!\n");
+
+    std::size_t hash = 5381;
+    for (const auto & value : input)
+    {
+        hash = ((hash << 5) + hash) + value;
+    }
+    return static_cast<IntegerType>(hash);
+}
 }
 }
