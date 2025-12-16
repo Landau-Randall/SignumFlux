@@ -66,7 +66,7 @@ private:
     CharType advance();
 
     static Container::Map<Container::VectorView<const CharType>, TokenType> keywords_;
-    static void initializeKeywords();  // 初始化函数
+    static void initializeKeywords();  
 
 public:
     Lexer() = default;
