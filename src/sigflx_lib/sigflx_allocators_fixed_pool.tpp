@@ -6,18 +6,18 @@ namespace SignumFlux
 namespace Allocators
 {
 
-template<FixedBlockPool::SizeType PoolSize>
-FixedBlockPool::PoolBlock<PoolSize>::PoolBlock()
+template<FixedBlockPool::SizeType BlockSize>
+FixedBlockPool::PoolBlock<BlockSize>::PoolBlock()
 {
 
 }
 
-template<FixedBlockPool::SizeType PoolSize>
-FixedBlockPool::PoolBlock<PoolSize>::PoolBlock(ByteType * source,SizeType blockSize)
+template<FixedBlockPool::SizeType BlockSize>
+FixedBlockPool::PoolBlock<BlockSize>::PoolBlock(ByteType * source,SizeType blockSize)
 {
     assert(is2Power(blockSize));
     blockSize_ = blockSize;
-    blockCount_ = PoolSize / blockSize_;
+    blockCount_ = BlockSize / blockSize_;
     freeCount_  = blockCount_;
     data_ = source;
     void * ptr = Platform::Allocate<Platform::CurrentOS>::allocate(freeCount_ * sizeof(ByteType*),64);
@@ -31,8 +31,8 @@ FixedBlockPool::PoolBlock<PoolSize>::PoolBlock(ByteType * source,SizeType blockS
     }
 }
 
-template<FixedBlockPool::SizeType PoolSize>
-FixedBlockPool::PoolBlock<PoolSize>::PoolBlock(PoolBlock && object):
+template<FixedBlockPool::SizeType BlockSize>
+FixedBlockPool::PoolBlock<BlockSize>::PoolBlock(PoolBlock && object):
 data_(object.data_),
 freeList_(object.freeList_),
 blockSize_(object.blockSize_),
@@ -46,14 +46,14 @@ freeCount_(object.freeCount_)
     object.freeCount_ = 0;
 }
 
-template<FixedBlockPool::SizeType PoolSize>
-FixedBlockPool::PoolBlock<PoolSize>::~PoolBlock()
+template<FixedBlockPool::SizeType BlockSize>
+FixedBlockPool::PoolBlock<BlockSize>::~PoolBlock()
 {
 
 }
 
-template<FixedBlockPool::SizeType PoolSize>
-FixedBlockPool::PoolBlock<PoolSize> & FixedBlockPool::PoolBlock<PoolSize>::operator=(PoolBlock && object)
+template<FixedBlockPool::SizeType BlockSize>
+FixedBlockPool::PoolBlock<BlockSize> & FixedBlockPool::PoolBlock<BlockSize>::operator=(PoolBlock && object)
 {
     if (this != &object)
     {
@@ -72,8 +72,8 @@ FixedBlockPool::PoolBlock<PoolSize> & FixedBlockPool::PoolBlock<PoolSize>::opera
     return *this;
 }
 
-template<FixedBlockPool::SizeType PoolSize>
-void * FixedBlockPool::PoolBlock<PoolSize>::allocateBlock()
+template<FixedBlockPool::SizeType BlockSize>
+void * FixedBlockPool::PoolBlock<BlockSize>::allocateBlock()
 {
     if (freeCount_ == 0)
     {
@@ -85,14 +85,14 @@ void * FixedBlockPool::PoolBlock<PoolSize>::allocateBlock()
     }
 }
 
-template<FixedBlockPool::SizeType PoolSize>
-void FixedBlockPool::PoolBlock<PoolSize>::deallocateBlock(void * ptr)
+template<FixedBlockPool::SizeType BlockSize>
+void FixedBlockPool::PoolBlock<BlockSize>::deallocateBlock(void * ptr)
 {
     freeList_[freeCount_++] = static_cast<ByteType*>(ptr);
 }
 
-template<FixedBlockPool::SizeType PoolSize>
-void FixedBlockPool::PoolBlock<PoolSize>::release()
+template<FixedBlockPool::SizeType BlockSize>
+void FixedBlockPool::PoolBlock<BlockSize>::release()
 {
     data_ = nullptr;
     if (freeList_ != nullptr)
@@ -105,8 +105,8 @@ void FixedBlockPool::PoolBlock<PoolSize>::release()
     freeCount_ = 0;
 }
 
-template<FixedBlockPool::SizeType PoolSize>
-bool FixedBlockPool::PoolBlock<PoolSize>::isFree(SizeType n) const noexcept
+template<FixedBlockPool::SizeType BlockSize>
+bool FixedBlockPool::PoolBlock<BlockSize>::isFree(SizeType n) const noexcept
 {
     return freeCount_ >= n;
 }
@@ -126,13 +126,13 @@ FixedBlockPool::SizeType FixedBlockPool::nextPowerOfTwo(SizeType x)
 
 FixedBlockPool::FixedBlockPool()
 {
-    void * ptr = Platform::Allocate<Platform::CurrentOS>::allocate(7 * poolSize_,64);
+    void * ptr = Platform::Allocate<Platform::CurrentOS>::allocate(7 * BlockSize_,64);
     if (ptr != nullptr)
     {
         source_ = static_cast<ByteType*>(ptr);
         for (SizeType i = 0;i < 7;i++)
         {
-            pool_[i] = PoolBlock<poolSize_>(source_ + i * poolSize_, static_cast<PoolBlock<poolSize_>::SizeType>(1 << i));
+            pool_[i] = PoolBlock<BlockSize_>(source_ + i * BlockSize_, static_cast<PoolBlock<BlockSize_>::SizeType>(1 << i));
         }
     }
 }

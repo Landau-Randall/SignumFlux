@@ -13,10 +13,10 @@ class FixedBlockPool
 public:
     using SizeType = std::size_t;
     using ByteType = unsigned char;
-    template<SizeType PoolSize>
+    template<SizeType BlockSize>
     class PoolBlock
     {
-        static_assert((PoolSize ^ (PoolSize - 1) == 0) && (PoolSize > 64),"BlockSize must be the power of 2!");
+        static_assert((BlockSize ^ (BlockSize - 1) == 0) && (BlockSize > 64),"BlockSize must be the power of 2!");
     public:
         using SizeType = FixedBlockPool::SizeType;
         using ByteType = FixedBlockPool::ByteType;
@@ -49,9 +49,9 @@ public:
         bool isFree(SizeType n) const noexcept;
     };
 private:
-    static constexpr SizeType poolSize_ = 4096;
+    static constexpr SizeType BlockSize_ = 4096;
     ByteType * source_ = nullptr;
-    PoolBlock<poolSize_> pool_[7];
+    PoolBlock<BlockSize_> pool_[7];
     SizeType nextPowerOfTwo(SizeType x);
 public:
     FixedBlockPool();
