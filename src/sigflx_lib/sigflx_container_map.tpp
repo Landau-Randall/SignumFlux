@@ -28,6 +28,10 @@ Map<Key,Value>::Map(SizeType bucketsNumber)
         bucketsNumber_ <<= 1; 
     }
     buckets_ = new MapNode<Key,Value> * [bucketsNumber_];
+    for (SizeType i = 0;i < bucketsNumber_;++i)
+    {
+        buckets_[i] = nullptr;
+    }
 }
 
 template<typename Key,typename Value>
