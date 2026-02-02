@@ -233,25 +233,25 @@ void Signal<T,Allocator>::fill(const T & value)
 template<typename T,typename Allocator>
 typename Signal<T,Allocator>::SignalIterator Signal<T,Allocator>::begin() noexcept
 {
-    return data_[0];
+    return data_;
 }
 
 template<typename T,typename Allocator>
 typename Signal<T,Allocator>::SignalIterator Signal<T,Allocator>::end() noexcept
 {
-    return data_[frames_ - 1];
+    return data_ + frames_ - 1;
 }
 
 template<typename T,typename Allocator>
 typename Signal<T,Allocator>::ConstSignalIterator Signal<T,Allocator>::cbegin() const noexcept
 {
-    return data_[0];
+    return data_;
 }
 
 template<typename T,typename Allocator>
 typename Signal<T,Allocator>::ConstSignalIterator Signal<T,Allocator>::cend() const noexcept
 {
-    return data_[frames_ - 1];
+    return data_ + frames_ - 1;
 }
 
 template<typename T,typename Allocator>

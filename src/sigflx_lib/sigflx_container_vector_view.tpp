@@ -5,7 +5,7 @@ namespace SignumFlux
 namespace Container
 {
 template<typename T>
-VectorView<T>::VectorView(ConstPointer data,SizeType size):
+VectorView<T>::VectorView(Pointer data,SizeType size):
 data_(data),
 size_(size)
 {
@@ -19,26 +19,7 @@ typename VectorView<T>::Reference VectorView<T>::operator[](SizeType index)
 }
 
 template<typename T>
-typename VectorView<T>::ConstReference VectorView<T>::operator[](SizeType index) const
-{
-    return data_[index];
-}
-
-template<typename T>
 typename VectorView<T>::Reference VectorView<T>::at(SizeType index)
-{
-    if (index < size_)
-    {
-        return data_[index];
-    }
-    else
-    {
-        throw std::out_of_range("index out of vector view range!\n");
-    }
-}
-
-template<typename T>
-typename VectorView<T>::ConstReference VectorView<T>::at(SizeType index) const
 {
     if (index < size_)
     {
@@ -58,18 +39,6 @@ typename VectorView<T>::Iterator VectorView<T>::begin()
 
 template<typename T>
 typename VectorView<T>::Iterator VectorView<T>::end()
-{
-    return data_ + size_;
-}
-
-template<typename T>
-typename VectorView<T>::ConstIterator VectorView<T>::cbegin() const
-{
-    return data_;
-}
-
-template<typename T>
-typename VectorView<T>::ConstIterator VectorView<T>::cend() const
 {
     return data_ + size_;
 }

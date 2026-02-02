@@ -2,10 +2,11 @@
 #include <type_traits>
 #include <cstddef>
 #include <iterator>
+#include "sigflx_lib/sigflx_allocators_aligned.h"
 
 namespace SignumFlux
 {
-template<typename T,typename Allocator>
+template<typename T,typename Allocator = Allocators::AlignedAllocator<T>>
 class Signal
 {
 public:
@@ -16,8 +17,8 @@ public:
     using Reference = T &;
     using ConstReference = const T &;
     using AllocatorType = Allocator;
-    using SignalIterator = T &;
-    using ConstSignalIterator = const T &;
+    using SignalIterator = T *;
+    using ConstSignalIterator = const T *;
 private:
     Pointer data_ = nullptr;
     SizeType frames_ = 0;
