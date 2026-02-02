@@ -2,7 +2,6 @@
 #include <cstdint>
 #include <string>
 #include <variant>
-#include "sigflx_lib/sigflx_math_hasher.h"
 
 enum class ParameterType
 {
@@ -19,7 +18,6 @@ namespace Modules
 class Parameter
 {
 private:
-    std::uint32_t uid_ = 0;
     std::string name_;
     std::variant<
         float,
@@ -36,7 +34,6 @@ public:
 
     ~Parameter() = default;
 
-    std::uint32_t uid() const noexcept { return uid_; };
     const std::string & name() const noexcept { return name_; };
     ParameterType type() const noexcept { return type_; };
     
