@@ -2,7 +2,7 @@
 
 namespace SignumFlux
 {
-namespace Signal
+namespace Digital
 {
 template<typename T>
 void inpulse(T * data,std::size_t len,T amp)
@@ -26,7 +26,7 @@ void step(T * data,std::size_t len,std::size_t delay,T amp)
 }
 
 template<typename T>
-void sine(T* data, std::size_t len, T freq, T amp = T(1), T phase = T(0), T sampleRate = T(44100))
+void sine(T* data, std::size_t len, T freq, T amp, T phase, T sampleRate)
 {
     if (data != nullptr && len != 0)
     {
@@ -36,7 +36,7 @@ void sine(T* data, std::size_t len, T freq, T amp = T(1), T phase = T(0), T samp
 }
 
 template<typename T>
-void cosine(T* data, std::size_t len, T freq, T amp = T(1), T phase = T(0), T sampleRate = T(44100))
+void cosine(T* data, std::size_t len, T freq, T amp, T phase, T sampleRate)
 {
     if (data != nullptr && len != 0)
     {
@@ -46,7 +46,7 @@ void cosine(T* data, std::size_t len, T freq, T amp = T(1), T phase = T(0), T sa
 }
 
 template<typename T>
-void square(T * data, std::size_t len,T freq, T amp = T(1), T phase = T(0), T sampleRate = T(44100), T duty = T(0.5))
+void square(T * data, std::size_t len,T freq, T amp, T phase, T sampleRate, T duty)
 {
     if (data != nullptr && len != 0)
     {
@@ -59,7 +59,7 @@ void square(T * data, std::size_t len,T freq, T amp = T(1), T phase = T(0), T sa
 }
 
 template<typename T>
-void sawtooth(T* data, std::size_t len, T freq, T amp = T(1), T phase = T(0), T sampleRate = T(44100))
+void sawtooth(T* data, std::size_t len, T freq, T amp, T phase, T sampleRate)
 {
     if (data != nullptr && len != 0)
     {
@@ -72,7 +72,7 @@ void sawtooth(T* data, std::size_t len, T freq, T amp = T(1), T phase = T(0), T 
 }
 
 template<typename T>
-void triangle(T* data, std::size_t len, T freq, T amp = T(1), T phase = T(0), T sampleRate = T(44100))
+void triangle(T* data, std::size_t len, T freq, T amp, T phase, T sampleRate)
 {
     if (data != nullptr && len != 0)
     {

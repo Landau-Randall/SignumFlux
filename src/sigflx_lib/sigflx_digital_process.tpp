@@ -2,7 +2,7 @@
 
 namespace SignumFlux
 {
-namespace Signal
+namespace Digital
 {
 template<typename T>
 void add(T * dest,std::size_t len,T * additor1,T * additor2)
