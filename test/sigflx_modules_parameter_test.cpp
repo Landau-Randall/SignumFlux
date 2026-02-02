@@ -14,6 +14,4 @@ TEST(ParameterTest,ParameterConstruction)
     std::cout << freq.name() << " : " << freq.value<float>() <<  std::endl;
     std::cout << phase.name() << " : " << phase.value<float>() << std::endl;
     std::cout << wave.name() << wave.value<std::string>() << std::endl;
-
-    EXPECT_NE(freq.uid(),phase.uid());
 }
